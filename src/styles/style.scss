@@ -44,7 +44,8 @@ body {
 }
 
 .container {
-
+	max-width: 1050px;
+	margin: 0 auto;
 }
 // ==== header
 .header-small {
@@ -197,7 +198,6 @@ body {
 	display: flex;
 	justify-content: center;
 	grid-gap: 1em;
-	margin-top: 110px;
 }
 .intro__icon {
 	width: 40px;
@@ -212,9 +212,13 @@ body {
 // ==== intro ====
 // ==== obituary ====
 .obituary {
+}
+.obituary__title {}
+.section {
 	margin-top: 110px;
 }
-.obituary__title {
+.section__title {
+	position: relative;
 	font-size: 28px;
 	margin-bottom: 60px;
 
@@ -225,7 +229,7 @@ body {
 		display: block;
 		left: 0;
 		bottom: -15px;
-		width: 30px;
+		width: 50px;
 		height: 3px;
 		background-color: var(--blue);
 	}
@@ -233,5 +237,86 @@ body {
 .obituary__text {
 	line-height: 1.8;
 	font-size: 1.1rem;
+
+	&::first-letter {
+		float: left;
+		font-size: 3.5em;
+		line-height: 1em;
+		padding: 0 10px;
+	}
 }
 // ==== obituary ====
+// ==== gallery ====
+.gallery {
+}
+.section {
+}
+.gallery__title {
+}
+.section__title {
+}
+.gallery__filter {
+	display: flex;
+	grid-gap: 20px;
+}
+.gallery__filter_button {
+	display: flex;
+	align-items: center;
+	grid-gap: 5px;
+	padding: 0.5em 1.2em;
+	cursor: pointer;
+	border-radius: 4px;
+	white-space: nowrap;
+	box-shadow: 3px 3px 5px var(--light-shadow);
+
+	@media (hover: hover) {
+		transition: transform 0.3s ease;
+
+		&:hover {
+			transform: translateY(-5px);
+		}
+	}
+}
+.gallery__filter_icon {
+	max-width: 16px;
+	max-height: 16px;
+	fill: var(--blue);
+}
+// ==== gallery ====
+// ==== memory ====
+.posts {
+	display: flex;
+	flex-direction: column;
+	grid-gap: 40px;
+}
+.post {
+	padding: 20px 25px;
+	box-shadow: 0 0 18px 1px rgba(0, 0, 0, 0.1);
+	border-radius: 6px;
+}
+.post__date {
+	font-style: italic;
+	line-height: 1.2;
+	margin-bottom: 20px;
+}
+.post__text {
+	line-height: 1.5;
+}
+.post__author {
+	color: var(--blue);
+	font-size: 1.3em;
+	line-height: 1.5;
+	margin: 20px 50px 0 0;
+	text-align: right;
+}
+.post__images {
+	display: flex;
+	grid-gap: 15px;
+	flex-wrap: wrap;
+}
+.post__image {
+	max-width: 100px;
+	max-height: 100px;
+	border-radius: 5px;
+}
+// ==== memory ====
