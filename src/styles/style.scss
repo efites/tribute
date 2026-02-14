@@ -246,6 +246,33 @@ body {
 	}
 }
 // ==== obituary ====
+// ==== favourites ====
+.favorites {
+}
+.favorites__title {
+}
+.favorites-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fit,minmax(310px, 1fr));
+	grid-gap: 50px 30px;
+}
+.favorites-list__item {
+}
+.favorites-list__title {
+	display: flex;
+	grid-gap: 10px;
+	margin-bottom: 10px;
+	color: var(--blue);
+}
+.favorites-list_icon {
+	max-width: 17px;
+	max-height: 17px;
+	fill: var(--blue);
+}
+.favorites-list__text {
+	line-height: 1.5;
+}
+// ==== favourites ====
 // ==== gallery ====
 .gallery {
 }
@@ -320,3 +347,15 @@ body {
 	border-radius: 5px;
 }
 // ==== memory ====
+// ==== footer ====
+.footer {
+	margin-top: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 18px;
+	padding: 20px;
+	color: var(--text);
+	border-top: 1px solid var(--light-shadow);
+}
+// ==== footer ====
