@@ -1,0 +1,22 @@
+# Корневой файл EditorConfig
+root = true
+
+# Для всех файлов используем unix-совместимые переносы строк
+[*]
+charset = utf-8 # Кодировка файлов
+end_of_line = lf # Новая строка по правилам "LF | CR | CRLF"
+indent_style = tab # Отступ в виде "tab | space"
+indent_size = 4 # Длина отступа
+max_line_length = 100 # Макс. длина строки
+insert_final_newline = true # В конце файла всегда пустая строка
+trim_trailing_whitespace = true # Убирать пробелы на концах строк
+
+# Для всех файлов ".md"
+[*.md]
+trim_trailing_whitespace = false
+
+# Минифицированные файлы игнорировать.
+[*.min.*]
+indent_style = ignore
+trim_trailing_whitespace = false
+insert_final_newline = ignore

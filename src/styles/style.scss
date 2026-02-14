@@ -1,0 +1,237 @@
+:root {
+  --color: #1DA1F2;
+  --white: #fff;
+  --light-shadow: rgba(32,46,66,0.08);
+  --text: rgb(51, 51, 51);
+  --blue: rgb(129, 202, 218);
+}
+
+@font-face {
+	font-family: 'Juana';
+	font-display: fallback;
+	src: url('/fonts/Juana.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+svg {
+	max-height: inherit;
+}
+
+body {
+}
+
+.wrapper {
+}
+
+.sky {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	height: 400px;
+}
+
+.clouds {
+	position: absolute;
+	z-index: -1;
+	display: block;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	max-width: 100%;
+}
+
+.container {
+
+}
+// ==== header
+.header-small {
+	position: fixed;
+	z-index: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	top: 0;
+	left: 0;
+	width: 100%;
+	padding: 20px;
+	grid-gap: 20px;
+	backdrop-filter: blur(5px);
+	background-color: rgba(255, 255, 255, 0.29);
+}
+.header-small__photo {
+	position: relative;
+	width: 45px;
+	aspect-ratio: 1 / 1;
+	background-color: var(--white);
+	border: 2px solid var(--white);
+	border-radius: 2px;
+}
+.header-small__frame {
+	position: absolute;
+	z-index: 1;
+	display: block;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+.header-small__person {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 2px;
+}
+.header-small__text {
+	font-size: 35px;
+}
+
+
+.header {
+	position: sticky;
+	top: 10px;
+	display: flex;
+	justify-content: center;
+	grid-gap: 100px;
+	margin-top: -50px;
+}
+.header__photo {
+	position: relative;
+	aspect-ratio: 1 / 1;
+	height: 300px;
+	box-shadow: 0rem 0.875rem 1.5rem 0rem var(--light-shadow);
+}
+.header__photo_frame {
+	position: absolute;
+	z-index: 1;
+	display: block;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: var(--white);
+	border: 5px solid var(--white);
+	border-radius: 5px;
+}
+.header__photo_person {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 2px;
+}
+.header-info {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+.header-info__title {
+	font-size: 50px;
+	margin-bottom: 18px;
+}
+.header-info__dates {
+	display: flex;
+	align-items: center;
+	grid-gap: 10px;
+}
+.header-info__icon {
+	max-width: 20px;
+	max-height: 20px;
+	fill: var(--blue);
+}
+.header-info__text {
+	font-size: 20px;
+	color: color-mix(in srgb, var(--text), transparent 30%);
+}
+.header-info__between {
+}
+.header-info__location {
+	display: flex;
+	align-items: center;
+	grid-gap: 10px;
+}
+// ==== header ====
+// ==== menu ====
+.menu {
+	display: flex;
+	justify-content: center;
+	margin-top: 150px;
+}
+.menu__list {
+	display: inline-flex;
+	justify-content: center;
+	grid-gap: 10px;
+	box-shadow: 3px 3px 5px var(--light-shadow);
+	border-radius: 3px;
+}
+.menu__item {
+	display: flex;
+	align-items: center;
+	grid-gap: 10px;
+	padding: 1em 2em;
+
+	@media (hover: hover) {
+		&:hover {
+			cursor: pointer;
+			.menu__text {
+				transform: translateX(5px);
+				color: var(--blue);
+			}
+		}
+	}
+}
+.menu__icon {
+	max-width: 18px;
+	max-height: 18px;
+	fill: var(--blue);
+}
+.menu__text {
+	font-size: 18px;
+	white-space: nowrap;
+	transition: color 0.3s, transform 0.3s;
+}
+// ==== menu ====
+// ==== intro ====
+.intro {
+	display: flex;
+	justify-content: center;
+	grid-gap: 1em;
+	margin-top: 110px;
+}
+.intro__icon {
+	width: 40px;
+	max-height: 30px;
+	fill: var(--blue);
+}
+.intro__text {
+	font-size: 1.6em;
+	line-height: 1.5;
+	max-width: 700px;
+}
+// ==== intro ====
+// ==== obituary ====
+.obituary {
+	margin-top: 110px;
+}
+.obituary__title {
+	font-size: 28px;
+	margin-bottom: 60px;
+
+	&:before {
+		content: '';
+		position: absolute;
+		z-index: 1;
+		display: block;
+		left: 0;
+		bottom: -15px;
+		width: 30px;
+		height: 3px;
+		background-color: var(--blue);
+	}
+}
+.obituary__text {
+	line-height: 1.8;
+	font-size: 1.1rem;
+}
+// ==== obituary ====
