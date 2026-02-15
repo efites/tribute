@@ -4,6 +4,8 @@
   --light-shadow: rgba(32,46,66,0.08);
   --text: rgb(51, 51, 51);
   --blue: rgb(129, 202, 218);
+  --clr-transp-10: color-mix(in srgb, var(--blue), transparent 90%);
+  --clr-lighter: color-mix(in srgb, var(--blue), white 50%);
 }
 
 @font-face {
@@ -301,9 +303,15 @@ body {
 	border-radius: 4px;
 	white-space: nowrap;
 	box-shadow: 3px 3px 5px var(--light-shadow);
+	transition: transform 0.3s, outline 0.3s, background-color 0.3s ease;
+	outline: 1px solid transparent;
+
+	&.active {
+		outline: 1px solid var(--clr-lighter);
+		background-color: var(--clr-transp-10);
+	}
 
 	@media (hover: hover) {
-		transition: transform 0.3s ease;
 
 		&:hover {
 			transform: translateY(-5px);
@@ -314,6 +322,28 @@ body {
 	max-width: 16px;
 	max-height: 16px;
 	fill: var(--blue);
+}
+
+.masonry {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-gap: 20px;
+	margin-top: 30px;
+}
+.masonry__column {
+	display: flex;
+	flex-direction: column;
+	grid-gap: 20px;
+}
+.masonry__item {
+	overflow: hidden;
+	border-radius: 4px;
+	cursor: pointer;
+}
+.masonry__img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 // ==== gallery ====
 // ==== memory ====
