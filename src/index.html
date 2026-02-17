@@ -4,26 +4,28 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Tribute</title>
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css" />
 		<link rel="stylesheet" href="./styles/normalize.css" />
+		<link rel="stylesheet" href="./styles/splide.min.css" />
 		<link rel="stylesheet" href="./styles/style.css" />
 	</head>
 	<body>
 		<div class="popup">
 			<div class="popup__container">
-				<div class="slider">
-					<div class="slider__item">
-						<img src="img/person.jpg" class="slider__img" alt="person">
+				<section class="splide" aria-label="Splide Basic HTML Example">
+					<div class="splide__track">
+						<ul class="splide__list">
+							<div class="splide__slide slider__item">
+								<img src="img/person.jpg" class="slider__img" alt="person" />
+							</div>
+							<div class="splide__slide slider__item">
+								<img src="img/person2.jpg" class="slider__img" alt="person" />
+							</div>
+							<div class="splide__slide slider__item">
+								<img src="img/person3.jpg" class="slider__img" alt="person" />
+							</div>
+						</ul>
 					</div>
-					<div class="slider__item">
-						<img src="img/person2.jpg" class="slider__img" alt="person">
-					</div>
-					<div class="slider__item">
-						<img src="img/person3.jpg" class="slider__img" alt="person">
-					</div>
-				</div>
+				</section>
 			</div>
 		</div>
 		<div class="wrapper">
@@ -290,9 +292,9 @@
 				<footer class="footer">Made with love</footer>
 			</div>
 		</div>
-		<script
+		<!-- <script
 			defer
-			src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
+			src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script> -->
 		<script defer type="module" src="script.js"></script>
 	</body>
 </html>

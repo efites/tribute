@@ -1,4 +1,3 @@
-
 const popup = document.querySelector('div.popup')
 const masonry = document.querySelector('div.masonry')
 const filters = document.querySelectorAll('button.gallery__filter_button')
@@ -16,26 +15,20 @@ filters.forEach(filter => {
 	})
 })
 
-
-masonry.addEventListener('click', (event) => {
+masonry.addEventListener('click', event => {
 	popup.classList.add('active')
-	console.log(event.target)
 })
 
-popup.addEventListener('click', (event) => {
-	if (event.target === event.currentTarget) {
-		popup.classList.remove('active')
-	}
+// popup.addEventListener('click', (event) => {
+// if (event.target === event.currentTarget) {
+// 	popup.classList.remove('active')
+// }
+// })
+
+var splide = new Splide('.splide', {
+	type: 'loop',
+	perPage: 1,
+	focus: 'center',
+	pagination: false
 })
-
-
-
-const slider = tns({
-	container: '.slider',
-	items: 2,
-	autoHeight: true,
-	// autoWidth: true,
-	center: true,
-	mouseDrag: true,
-	viewportMax: true,
-})
+splide.mount()

@@ -411,29 +411,21 @@ svg {
   pointer-events: all;
 }
 
-.slider {
-  display: flex;
-}
-
 .slider__item, .tns-item {
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 85vw;
-  max-height: 90vh;
-  opacity: 0;
-}
-
-.tns-slide-active {
-  opacity: 1;
 }
 
 .slider__img {
+  max-width: 90vw;
+  max-height: 90vh;
   width: 100%;
   height: 100%;
   object-fit: contain;
   padding: 10px;
   border-radius: 3px;
+  background-color: var(--white);
 }
 
 /*# sourceMappingURL=style.css.map */

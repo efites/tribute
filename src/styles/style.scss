@@ -420,30 +420,23 @@ body {
 .popup__container {
 }
 .slider {
-	display: flex;
 }
 .slider__item, .tns-item {
-	// width: 100%;
-	// height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	max-width: 85vw;
-	max-height: 90vh;
-	// max-height: calc(90vh - 50px);
-	// max-width: min(90%, 1200px);
-	opacity: 0;
 }
 .tns-slide-active {
-	opacity: 1;
 }
 
 .slider__img {
+	max-width: 90vw;
+	max-height: 90vh;
 	width: 100%;
 	height: 100%;
 	object-fit: contain;
 	padding: 10px;
 	border-radius: 3px;
-	// background-color: var(--white);
+	background-color: var(--white);
 }
 // ==== popup ====
