@@ -6,6 +6,7 @@
   --blue: rgb(129, 202, 218);
   --clr-transp-10: color-mix(in srgb, var(--blue), transparent 90%);
   --clr-lighter: color-mix(in srgb, var(--blue), white 50%);
+  --popup-background: rgba(0, 0, 0, 20%);
 }
 
 @font-face {
@@ -395,3 +396,54 @@ body {
 	border-top: 1px solid var(--light-shadow);
 }
 // ==== footer ====
+// ==== popup ====
+.popup {
+	position: fixed;
+	z-index: 2;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--popup-background);
+	backdrop-filter: blur(2px);
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+
+	&.active {
+		opacity: 1;
+		pointer-events: all;
+	}
+}
+.popup__container {
+}
+.slider {
+	display: flex;
+}
+.slider__item, .tns-item {
+	// width: 100%;
+	// height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	max-width: 85vw;
+	max-height: 90vh;
+	// max-height: calc(90vh - 50px);
+	// max-width: min(90%, 1200px);
+	opacity: 0;
+}
+.tns-slide-active {
+	opacity: 1;
+}
+
+.slider__img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	padding: 10px;
+	border-radius: 3px;
+	// background-color: var(--white);
+}
+// ==== popup ====

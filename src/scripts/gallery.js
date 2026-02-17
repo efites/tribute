@@ -1,4 +1,5 @@
 
+const popup = document.querySelector('div.popup')
 const masonry = document.querySelector('div.masonry')
 const filters = document.querySelectorAll('button.gallery__filter_button')
 let activeFilter
@@ -17,25 +18,24 @@ filters.forEach(filter => {
 
 
 masonry.addEventListener('click', (event) => {
+	popup.classList.add('active')
 	console.log(event.target)
+})
+
+popup.addEventListener('click', (event) => {
+	if (event.target === event.currentTarget) {
+		popup.classList.remove('active')
+	}
 })
 
 
 
-// var slider = tns({
-// 	container: '.my-slider',
-// 	items: 1,
-// 	responsive: {
-// 		640: {
-// 			edgePadding: 20,
-// 			gutter: 20,
-// 			items: 2,
-// 		},
-// 		700: {
-// 			gutter: 30,
-// 		},
-// 		900: {
-// 			items: 3,
-// 		},
-// 	},
-// })
+const slider = tns({
+	container: '.slider',
+	items: 2,
+	autoHeight: true,
+	// autoWidth: true,
+	center: true,
+	mouseDrag: true,
+	viewportMax: true,
+})
