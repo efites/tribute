@@ -370,8 +370,11 @@ body {
 }
 
 .masonry {
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
+	display: flex;
+	flex-wrap: wrap;
+
+
+	// grid-template-columns: repeat(4, 1fr);
 	grid-gap: 20px;
 	margin-top: 30px;
 
@@ -389,6 +392,7 @@ body {
 	grid-gap: 20px;
 }
 .masonry__item {
+	flex: 0 1 23%;
 	overflow: hidden;
 	border-radius: 4px;
 	cursor: pointer;

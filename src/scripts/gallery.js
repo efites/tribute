@@ -3,58 +3,93 @@ const masonries = document.querySelectorAll('div.masonry__item')
 const filters = document.querySelectorAll('button.gallery__filter_button')
 const prevs = document.querySelectorAll('.slide__arrow_btn.prev')
 const nexts = document.querySelectorAll('.slide__arrow_btn.next')
-const slideList = document.querySelectorAll('.splide__list')
+const slideList = document.querySelectorAll('.splide')
 
 filters.forEach(filter => {
-	filter.addEventListener('click', () => {
+	filter.addEventListener('click', async () => {
 		filters.forEach(filter => {
 			filter.classList.remove('active')
 		})
 
 		filter.classList.add('active')
 
-		const imgs = Array.from(document.querySelectorAll(`img[data-filter="${filter.innerText}"]`))
+		let imgs
+
+		if (filter.innerText === 'All') {
+			imgs = Array.from(document.querySelectorAll(`.masonry__item>img`))
+		} else {
+			imgs = Array.from(document.querySelectorAll(`.masonry__item[data-filter="${filter.innerText}"]>img`))
+		}
+
 		const srcs = imgs.map(img => img.getAttribute('src'))
 
 		console.log(srcs)
 		let html = ''
 
+		// await splide.destroy(true)
+
 		for (const src of srcs) {
-			html += `
-				<div class="splide__slide slider__item">
-					<div class="splide__cube"></div>
-					<div class="splide__cover">
-						<button class="splide__close">
-							<svg class="splide__icon_close">
-								<use href="/src/img/icons/sprite.svg#close"></use>
-							</svg>
-						</button>
-						<button class="slide__arrow_btn prev">
-							<svg class="splide__icon">
-								<use href="/src/img/icons/sprite.svg#left"></use>
-							</svg>
-						</button>
-						<button class="slide__arrow_btn next">
-							<svg class="splide__icon">
-								<use href="/src/img/icons/sprite.svg#right"></use>
-							</svg>
-						</button>
+			html = `
+				<section class="splide" aria-label="Splide Basic HTML Example">
+					<div class="splide__track">
+						<ul class="splide__list">
+							<div class="splide__slide slider__item">
+								<div class="splide__cube"></div>
+								<div class="splide__cover">
+									<button class="splide__close">
+										<svg class="splide__icon_close">
+											<use href="/src/img/icons/sprite.svg#close"></use>
+										</svg>
+									</button>
+									<button class="slide__arrow_btn prev">
+										<svg class="splide__icon">
+											<use href="/src/img/icons/sprite.svg#left"></use>
+										</svg>
+									</button>
+									<button class="slide__arrow_btn next">
+										<svg class="splide__icon">
+											<use href="/src/img/icons/sprite.svg#right"></use>
+										</svg>
+									</button>
+								</div>
+								<img src="${src}" class="slider__img" alt="ABRA" />
+							</div>
+						</ul>
 					</div>
-					<img src="${src}" class="slider__img" alt="person" />
-				</div>
+				</section>
 			`
 		}
+		slideList.outerHTML = html
 
-		slideList.innerHTML = html
+		// splide = new Splide('.splide', {
+		// 	type: 'loop',
+		// 	perPage: 1,
+		// 	focus: 'center',
+		// 	pagination: false,
+		// 	arrows: false,
+		// 	perMove: 1,
+		// })
+		// await splide.mount()
+
+		// splide.on('moved', async () => {
+		// 	await updateImageBorder()
+		// })
 
 		masonries.forEach(masonry => {
-			console.log(masonry.dataset.filter)
+			if (filter.innerText === 'All') {
+				masonry.style.display = 'block'
+
+				return
+			}
+
 			if (masonry.dataset.filter === filter.innerText) {
 				masonry.style.display = 'block'
 			} else {
 				masonry.style.display = 'none'
 			}
 		})
+
+		await splide.refresh()
 	})
 })
 
