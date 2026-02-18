@@ -1,24 +1,70 @@
 const popup = document.querySelector('div.popup')
-const masonry = document.querySelector('div.masonry')
+const masonries = document.querySelectorAll('div.masonry__item')
 const filters = document.querySelectorAll('button.gallery__filter_button')
 const prevs = document.querySelectorAll('.slide__arrow_btn.prev')
 const nexts = document.querySelectorAll('.slide__arrow_btn.next')
-let activeFilter
+const slideList = document.querySelectorAll('.splide__list')
 
 filters.forEach(filter => {
-	if (!activeFilter) {
-		activeFilter = [...filters].find(filter => filter.classList.contains('active'))
-	}
-
 	filter.addEventListener('click', () => {
-		filters.forEach(filter => filter.classList.remove('active'))
+		filters.forEach(filter => {
+			filter.classList.remove('active')
+		})
+
 		filter.classList.add('active')
+
+		const imgs = Array.from(document.querySelectorAll(`img[data-filter="${filter.innerText}"]`))
+		const srcs = imgs.map(img => img.getAttribute('src'))
+
+		console.log(srcs)
+		let html = ''
+
+		for (const src of srcs) {
+			html += `
+				<div class="splide__slide slider__item">
+					<div class="splide__cube"></div>
+					<div class="splide__cover">
+						<button class="splide__close">
+							<svg class="splide__icon_close">
+								<use href="/src/img/icons/sprite.svg#close"></use>
+							</svg>
+						</button>
+						<button class="slide__arrow_btn prev">
+							<svg class="splide__icon">
+								<use href="/src/img/icons/sprite.svg#left"></use>
+							</svg>
+						</button>
+						<button class="slide__arrow_btn next">
+							<svg class="splide__icon">
+								<use href="/src/img/icons/sprite.svg#right"></use>
+							</svg>
+						</button>
+					</div>
+					<img src="${src}" class="slider__img" alt="person" />
+				</div>
+			`
+		}
+
+		slideList.innerHTML = html
+
+		masonries.forEach(masonry => {
+			console.log(masonry.dataset.filter)
+			if (masonry.dataset.filter === filter.innerText) {
+				masonry.style.display = 'block'
+			} else {
+				masonry.style.display = 'none'
+			}
+		})
 	})
 })
 
-masonry.addEventListener('click', async event => {
-	popup.classList.add('active')
-	await updateImageBorder()
+masonries.forEach(masonry => {
+	masonry.addEventListener('click', async event => {
+		popup.classList.add('active')
+		console.log('Открываю: ', Number(event.currentTarget.dataset.order) - 1)
+		splide.go(Number(event.currentTarget.dataset.order) - 1)
+		updateImageBorder()
+	})
 })
 
 popup.addEventListener('click', event => {
