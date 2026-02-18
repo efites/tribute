@@ -38,6 +38,7 @@ var splide = new Splide('.splide', {
 	focus: 'center',
 	pagination: false,
 	arrows: false,
+	perMove: 1,
 })
 
 splide.mount()

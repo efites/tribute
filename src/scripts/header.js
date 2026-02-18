@@ -1,7 +1,11 @@
 const bigHeader = document.querySelector('header.header')
 const smallHeader = document.querySelector('div.header-small')
 
-document.body.addEventListener('scroll', () => {
+setHeader()
+
+document.body.addEventListener('scroll', setHeader)
+
+function setHeader() {
 	if (document.body.scrollTop > 440) {
 		bigHeader.style.opacity = '0'
 		bigHeader.style.transform = 'translateY(10px)'
@@ -18,5 +22,4 @@ document.body.addEventListener('scroll', () => {
 		smallHeader.style.opacity = '0'
 		smallHeader.style.transform = 'translateY(-10px)'
 	}
-})
-
+}

@@ -19,17 +19,17 @@
 								<div class="splide__cover">
 									<button class="splide__close">
 										<svg class="splide__icon_close">
-											<use href="/src/img/icons/sprite.svg#book"></use>
+											<use href="/src/img/icons/sprite.svg#close"></use>
 										</svg>
 									</button>
 									<button class="slide__arrow_btn prev">
 										<svg class="splide__icon">
-											<use href="/src/img/icons/sprite.svg#book"></use>
+											<use href="/src/img/icons/sprite.svg#left"></use>
 										</svg>
 									</button>
 									<button class="slide__arrow_btn next">
 										<svg class="splide__icon">
-											<use href="/src/img/icons/sprite.svg#book"></use>
+											<use href="/src/img/icons/sprite.svg#right"></use>
 										</svg>
 									</button>
 								</div>
@@ -40,17 +40,17 @@
 								<div class="splide__cover">
 									<button class="splide__close">
 										<svg class="splide__icon_close">
-											<use href="/src/img/icons/sprite.svg#book"></use>
+											<use href="/src/img/icons/sprite.svg#close"></use>
 										</svg>
 									</button>
 									<button class="slide__arrow_btn prev">
 										<svg class="splide__icon">
-											<use href="/src/img/icons/sprite.svg#book"></use>
+											<use href="/src/img/icons/sprite.svg#left"></use>
 										</svg>
 									</button>
 									<button class="slide__arrow_btn next">
 										<svg class="splide__icon">
-											<use href="/src/img/icons/sprite.svg#book"></use>
+											<use href="/src/img/icons/sprite.svg#right"></use>
 										</svg>
 									</button>
 								</div>
@@ -61,17 +61,17 @@
 								<div class="splide__cover">
 									<button class="splide__close">
 										<svg class="splide__icon_close">
-											<use href="/src/img/icons/sprite.svg#book"></use>
+											<use href="/src/img/icons/sprite.svg#close"></use>
 										</svg>
 									</button>
 									<button class="slide__arrow_btn prev">
 										<svg class="splide__icon">
-											<use href="/src/img/icons/sprite.svg#book"></use>
+											<use href="/src/img/icons/sprite.svg#left"></use>
 										</svg>
 									</button>
 									<button class="slide__arrow_btn next">
 										<svg class="splide__icon">
-											<use href="/src/img/icons/sprite.svg#book"></use>
+											<use href="/src/img/icons/sprite.svg#right"></use>
 										</svg>
 									</button>
 								</div>
@@ -105,7 +105,7 @@
 						<h1 class="header-info__title">Christopher Taylor</h1>
 						<div class="header-info__dates">
 							<svg class="header-info__icon">
-								<use href="/src/img/icons/sprite.svg#book"></use>
+								<use href="/src/img/icons/sprite.svg#calendar"></use>
 							</svg>
 							<div class="header-info__text">December 1st, 1965</div>
 							<svg class="header-info__icon">
@@ -115,43 +115,49 @@
 						</div>
 						<div class="header-info__location">
 							<svg class="header-info__icon">
-								<use href="/src/img/icons/sprite.svg#book"></use>
+								<use href="/src/img/icons/sprite.svg#map"></use>
 							</svg>
 							<div class="header-info__text">Austin, Texas</div>
 						</div>
 					</div>
 				</header>
 				<menu class="menu">
-					<ul class="menu__list">
-						<li class="menu__item">
+					<div class="menu__list">
+						<a class="menu__item" href="#obituary">
 							<svg class="menu__icon">
 								<use href="/src/img/icons/sprite.svg#book"></use>
 							</svg>
 							<h3 class="menu__text">Obituary</h3>
-						</li>
-						<li class="menu__item">
+						</a>
+						<a class="menu__item" href="#favorites">
 							<svg class="menu__icon">
-								<use href="/src/img/icons/sprite.svg#book"></use>
+								<use href="/src/img/icons/sprite.svg#stars"></use>
 							</svg>
-							<h3 class="menu__text">Obituary</h3>
-						</li>
-						<li class="menu__item">
+							<h3 class="menu__text">Favorites</h3>
+						</a>
+						<a class="menu__item" href="#gallery">
 							<svg class="menu__icon">
-								<use href="/src/img/icons/sprite.svg#book"></use>
+								<use href="/src/img/icons/sprite.svg#gallery"></use>
 							</svg>
-							<h3 class="menu__text">Obituary</h3>
-						</li>
-					</ul>
+							<h3 class="menu__text">Gallery</h3>
+						</a>
+						<a class="menu__item" href="#memory">
+							<svg class="menu__icon">
+								<use href="/src/img/icons/sprite.svg#comment"></use>
+							</svg>
+							<h3 class="menu__text">Memory wall</h3>
+						</a>
+					</div>
 				</menu>
-				<section class="intro section">
+				<section id="intro" class="intro section">
 					<svg class="intro__icon">
-						<use href="/src/img/icons/sprite.svg#book"></use>
+						<use href="/src/img/icons/sprite.svg#quotation"></use>
 					</svg>
 					<h4 class="intro__text">
 						May we find comfort in the treasured memories of those no longer with us.
 					</h4>
 				</section>
-				<section class="obituary section">
+				<section id="obituary" class="obituary section">
 					<h3 class="obituary__title section__title">Obituary</h3>
 					<p class="obituary__text">
 						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias nihil
@@ -171,13 +177,13 @@
 						velit officia, quae enim doloremque quo modi dolore animi ipsa?
 					</p>
 				</section>
-				<section class="favorites section">
+				<section id="favorites" class="favorites section">
 					<h3 class="favorites__title section__title">Favorites</h3>
 					<ul class="favorites-list">
 						<li class="favorites-list__item">
 							<h5 class="favorites-list__title">
-								<svg class="favorites-list_icon">
-									<use href="/src/img/icons/sprite.svg#book"></use>
+								<svg class="favorites-list_icon fill">
+									<use href="/src/img/icons/sprite.svg#quotation"></use>
 								</svg>
 								<span>Lorem ipsum dolor sit amet.</span>
 							</h5>
@@ -248,7 +254,7 @@
 						</li>
 					</ul>
 				</section>
-				<section class="gallery section">
+				<section id="gallery" class="gallery section">
 					<h3 class="gallery__title section__title">Gallery</h3>
 					<div class="gallery__filter">
 						<button class="gallery__filter_button active">
@@ -259,7 +265,7 @@
 						</button>
 						<button class="gallery__filter_button">
 							<svg class="gallery__filter_icon">
-								<use href="/src/img/icons/sprite.svg#book"></use>
+								<use href="/src/img/icons/sprite.svg#slider"></use>
 							</svg>
 							<span>Portrait</span>
 						</button>
@@ -305,7 +311,7 @@
 						</div> -->
 					</div>
 				</section>
-				<section class="memory section">
+				<section id="memory" class="memory section">
 					<h3 class="memory__title section__title">Memory wall</h3>
 					<div class="posts">
 						<div class="post">
