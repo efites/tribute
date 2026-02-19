@@ -24,58 +24,18 @@ filters.forEach(filter => {
 		}
 
 		const srcs = imgs.map(img => img.getAttribute('src'))
+		const slides = [...document.querySelectorAll('.slider__item')]
 
-		console.log(srcs)
-		let html = ''
-
-		// await splide.destroy(true)
-
-		for (const src of srcs) {
-			html = `
-				<section class="splide" aria-label="Splide Basic HTML Example">
-					<div class="splide__track">
-						<ul class="splide__list">
-							<div class="splide__slide slider__item">
-								<div class="splide__cube"></div>
-								<div class="splide__cover">
-									<button class="splide__close">
-										<svg class="splide__icon_close">
-											<use href="/src/img/icons/sprite.svg#close"></use>
-										</svg>
-									</button>
-									<button class="slide__arrow_btn prev">
-										<svg class="splide__icon">
-											<use href="/src/img/icons/sprite.svg#left"></use>
-										</svg>
-									</button>
-									<button class="slide__arrow_btn next">
-										<svg class="splide__icon">
-											<use href="/src/img/icons/sprite.svg#right"></use>
-										</svg>
-									</button>
-								</div>
-								<img src="${src}" class="slider__img" alt="ABRA" />
-							</div>
-						</ul>
-					</div>
-				</section>
-			`
-		}
-		slideList.outerHTML = html
-
-		// splide = new Splide('.splide', {
-		// 	type: 'loop',
-		// 	perPage: 1,
-		// 	focus: 'center',
-		// 	pagination: false,
-		// 	arrows: false,
-		// 	perMove: 1,
-		// })
-		// await splide.mount()
-
-		// splide.on('moved', async () => {
-		// 	await updateImageBorder()
-		// })
+		slides.forEach(slide => slide.classList.remove('splide__slide'))
+		slides
+			.filter((slide, index) => {
+				if (srcs.includes(slide.querySelector('img').getAttribute('src'))) {
+					return slide
+				}
+			})
+			.forEach(slide => slide.classList.add('splide__slide'))
+		splide.refresh()
+		splide.go(0);
 
 		masonries.forEach(masonry => {
 			if (filter.innerText === 'All') {
@@ -90,17 +50,15 @@ filters.forEach(filter => {
 				masonry.style.display = 'none'
 			}
 		})
-
-		await splide.refresh()
 	})
 })
 
 masonries.forEach(masonry => {
 	masonry.addEventListener('click', async event => {
 		popup.classList.add('active')
-		console.log('Открываю: ', Number(event.currentTarget.dataset.order) - 1)
-		splide.go(Number(event.currentTarget.dataset.order) - 1)
-		updateImageBorder()
+		const slides = [...document.querySelectorAll('.slider__item')]
+		await splide.go((Number(event.currentTarget.dataset.order) - 1) % slides.length)
+		await updateImageBorder()
 	})
 })
 

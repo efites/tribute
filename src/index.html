@@ -13,7 +13,7 @@
 			<div class="popup__container">
 				<section class="splide" aria-label="Splide Basic HTML Example">
 					<div class="splide__track">
-						<ul class="splide__list">
+						<div class="splide__list">
 							<div class="splide__slide slider__item">
 								<div class="splide__cube"></div>
 								<div class="splide__cover">
@@ -77,7 +77,49 @@
 								</div>
 								<img src="img/person3.jpg" class="slider__img" alt="person" />
 							</div>
-						</ul>
+							<div class="splide__slide slider__item">
+								<div class="splide__cube"></div>
+								<div class="splide__cover">
+									<button class="splide__close">
+										<svg class="splide__icon_close">
+											<use href="/src/img/icons/sprite.svg#close"></use>
+										</svg>
+									</button>
+									<button class="slide__arrow_btn prev">
+										<svg class="splide__icon">
+											<use href="/src/img/icons/sprite.svg#left"></use>
+										</svg>
+									</button>
+									<button class="slide__arrow_btn next">
+										<svg class="splide__icon">
+											<use href="/src/img/icons/sprite.svg#right"></use>
+										</svg>
+									</button>
+								</div>
+								<img src="img/person4.jpg" class="slider__img" alt="person" />
+							</div>
+							<div class="splide__slide slider__item">
+								<div class="splide__cube"></div>
+								<div class="splide__cover">
+									<button class="splide__close">
+										<svg class="splide__icon_close">
+											<use href="/src/img/icons/sprite.svg#close"></use>
+										</svg>
+									</button>
+									<button class="slide__arrow_btn prev">
+										<svg class="splide__icon">
+											<use href="/src/img/icons/sprite.svg#left"></use>
+										</svg>
+									</button>
+									<button class="slide__arrow_btn next">
+										<svg class="splide__icon">
+											<use href="/src/img/icons/sprite.svg#right"></use>
+										</svg>
+									</button>
+								</div>
+								<img src="img/person5.jpg" class="slider__img" alt="person" />
+							</div>
+						</div>
 					</div>
 				</section>
 			</div>
@@ -269,6 +311,12 @@
 							</svg>
 							<span>Portrait</span>
 						</button>
+						<button class="gallery__filter_button">
+							<svg class="gallery__filter_icon">
+								<use href="/src/img/icons/sprite.svg#slider"></use>
+							</svg>
+							<span>Old</span>
+						</button>
 					</div>
 					<div class="masonry">
 						<div data-order="1" data-filter="Portrait" class="masonry__item">
@@ -277,23 +325,14 @@
 						<div data-order="2" data-filter="All" class="masonry__item">
 							<img src="img/person2.jpg" alt="person" class="masonry__img" />
 						</div>
-						<div data-order="3" data-filter="Portrait" class="masonry__item">
+						<div data-order="3" data-filter="All" class="masonry__item">
 							<img src="img/person3.jpg" alt="person" class="masonry__img" />
 						</div>
-						<div data-order="4" data-filter="All" class="masonry__item">
-							<img src="img/person2.jpg" alt="person" class="masonry__img" />
+						<div data-order="4" data-filter="Portrait" class="masonry__item">
+							<img src="img/person4.jpg" alt="person" class="masonry__img" />
 						</div>
-						<div data-order="5" data-filter="All" class="masonry__item">
-							<img src="img/person3.jpg" alt="person" class="masonry__img" />
-						</div>
-						<div data-order="6" data-filter="All" class="masonry__item">
-							<img src="img/person.jpg" alt="person" class="masonry__img" />
-						</div>
-						<div data-order="7" data-filter="All" class="masonry__item">
-							<img src="img/person.jpg" alt="person" class="masonry__img" />
-						</div>
-						<div data-order="8" data-filter="All" class="masonry__item">
-							<img src="img/person2.jpg" alt="person" class="masonry__img" />
+						<div data-order="5" data-filter="Old" class="masonry__item">
+							<img src="img/person5.jpg" alt="person" class="masonry__img" />
 						</div>
 					</div>
 				</section>
