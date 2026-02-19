@@ -1,12 +1,12 @@
 :root {
-  --color: #1DA1F2;
-  --white: #fff;
-  --light-shadow: rgba(32,46,66,0.08);
-  --text: rgb(51, 51, 51);
-  --blue: rgb(129, 202, 218);
-  --clr-transp-10: color-mix(in srgb, var(--blue), transparent 90%);
-  --clr-lighter: color-mix(in srgb, var(--blue), white 50%);
-  --popup-background: rgba(0, 0, 0, 20%);
+	--color: #1da1f2;
+	--white: #fff;
+	--light-shadow: rgba(32, 46, 66, 0.08);
+	--text: rgb(51, 51, 51);
+	--blue: rgb(129, 202, 218);
+	--clr-transp-10: color-mix(in srgb, var(--blue), transparent 90%);
+	--clr-lighter: color-mix(in srgb, var(--blue), white 50%);
+	--popup-background: rgba(0, 0, 0, 20%);
 }
 
 $one: 900;
@@ -74,7 +74,9 @@ body {
 	grid-gap: 20px;
 	backdrop-filter: blur(5px);
 	background-color: rgba(255, 255, 255, 0.29);
-	transition: opacity 0.3s, transform 0.3s ease;
+	transition:
+		opacity 0.3s,
+		transform 0.3s ease;
 }
 .header-small__photo {
 	position: relative;
@@ -108,7 +110,6 @@ body {
 	}
 }
 
-
 .header {
 	position: sticky;
 	top: 10px;
@@ -116,7 +117,9 @@ body {
 	justify-content: center;
 	grid-gap: 100px;
 	margin-top: -50px;
-	transition: opacity 0.3s, transform 0.3s ease;
+	transition:
+		opacity 0.3s,
+		transform 0.3s ease;
 
 	@media (max-width: $one + 'px') {
 		flex-direction: column;
@@ -232,7 +235,9 @@ body {
 .menu__text {
 	font-size: 18px;
 	white-space: nowrap;
-	transition: color 0.3s, transform 0.3s;
+	transition:
+		color 0.3s,
+		transform 0.3s;
 
 	@media (max-width: $four + 'px') {
 		font-size: 16px;
@@ -259,7 +264,8 @@ body {
 // ==== obituary ====
 .obituary {
 }
-.obituary__title {}
+.obituary__title {
+}
 .section {
 	padding-top: 140px;
 }
@@ -299,7 +305,7 @@ body {
 }
 .favorites-list {
 	display: grid;
-	grid-template-columns: repeat(auto-fit,minmax(310px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
 	grid-gap: 50px 30px;
 }
 .favorites-list__item {
@@ -347,7 +353,10 @@ body {
 	border-radius: 4px;
 	white-space: nowrap;
 	box-shadow: 3px 3px 5px var(--light-shadow);
-	transition: transform 0.3s, outline 0.3s, background-color 0.3s ease;
+	transition:
+		transform 0.3s,
+		outline 0.3s,
+		background-color 0.3s ease;
 	outline: 1px solid transparent;
 
 	&.active {
@@ -356,7 +365,6 @@ body {
 	}
 
 	@media (hover: hover) {
-
 		&:hover {
 			transform: translateY(-5px);
 		}
@@ -372,7 +380,6 @@ body {
 .masonry {
 	display: flex;
 	flex-wrap: wrap;
-
 
 	// grid-template-columns: repeat(4, 1fr);
 	grid-gap: 20px;
@@ -477,7 +484,8 @@ body {
 }
 .slider {
 }
-.slider__item, .tns-item {
+.slider__item,
+.tns-item {
 	position: relative;
 	display: flex;
 	justify-content: center;
@@ -520,7 +528,9 @@ body {
 	height: 3em;
 	border-radius: 4px;
 	background-color: transparent;
-	transition: opacity 0.3s, background-color 0.3s ease;
+	transition:
+		opacity 0.3s,
+		background-color 0.3s ease;
 
 	&.prev {
 		right: calc(100% - 70px);

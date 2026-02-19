@@ -9,13 +9,12 @@ function setHeader() {
 	if (document.body.scrollTop > 440) {
 		bigHeader.style.opacity = '0'
 		bigHeader.style.transform = 'translateY(10px)'
-		bigHeader.style.pointerEvents = 'none';
+		bigHeader.style.pointerEvents = 'none'
 
 		smallHeader.style.opacity = '1'
 		smallHeader.style.transform = 'translateY(0)'
-
 	} else {
-		bigHeader.style.pointerEvents = 'all';
+		bigHeader.style.pointerEvents = 'all'
 		bigHeader.style.opacity = '1'
 		bigHeader.style.transform = 'translateY(0)'
 

@@ -18,7 +18,9 @@ filters.forEach(filter => {
 		if (filter.innerText === 'All') {
 			imgs = Array.from(document.querySelectorAll(`.masonry__item>img`))
 		} else {
-			imgs = Array.from(document.querySelectorAll(`.masonry__item[data-filter="${filter.innerText}"]>img`))
+			imgs = Array.from(
+				document.querySelectorAll(`.masonry__item[data-filter="${filter.innerText}"]>img`),
+			)
 		}
 
 		const srcs = imgs.map(img => img.getAttribute('src'))

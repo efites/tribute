@@ -9,10 +9,9 @@
 		"pretty": "prettier --no-error-on-unmatched-pattern --write src/**/*.{js,jsx,ts,tsx,html,css,scss}",
 		"build": "npx sass .\\src\\styles\\style.scss .\\src\\styles\\style.css"
 	},
-	"dependencies": {
-	},
 	"devDependencies": {
 		"husky": "^9.1.7",
+		"prettier": "^3.8.1",
 		"sass": "^1.97.3"
 	}
 }
