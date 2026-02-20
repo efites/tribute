@@ -1,109 +1,137 @@
 const popup = document.querySelector('div.popup')
 const splideList = document.querySelector('.splide__list')
-const masonries = Array.from(document.querySelectorAll('.masonry__item'))
+const masonryItems = Array.from(document.querySelectorAll('.masonry__item'))
 const filters = document.querySelectorAll('.gallery__filter_button')
 
-// 1. Сохраняем все оригинальные слайды в массив ОДИН РАЗ при загрузке.
-// Это наш "золотой запас", из которого мы будем брать нужные слайды.
-const allOriginalSlides = Array.from(document.querySelectorAll('.slider__item'))
+let splide
+let allGeneratedSlides = [] // Здесь будем хранить созданные DOM-узлы слайдов
 
-// Инициализация Splide
-var splide = new Splide('.splide', {
-	type: 'region',
-	perPage: 1,
-	focus: 'center',
-	pagination: false,
-	arrows: false,
-	perMove: 1,
-})
-splide.mount()
+// --- 1. ФУНКЦИЯ ГЕНЕРАЦИИ СЛАЙДОВ ---
+function generateSlides() {
+	allGeneratedSlides = masonryItems.map(item => {
+		const img = item.querySelector('img')
+		const src = img.getAttribute('src')
+		const alt = img.getAttribute('alt')
+		const filter = item.dataset.filter
 
-// Функция получения активного слайда
-function getActiveSlide() {
-	const index = splide.index
-	const slideComponent = splide.Components.Slides.getAt(index)
-	return slideComponent ? slideComponent.slide : null
+		// Создаем структуру слайда (как в вашем исходном HTML)
+		const slide = document.createElement('div')
+		slide.className = 'splide__slide slider__item'
+		slide.dataset.filter = filter // Сохраняем фильтр в самом слайде
+
+		slide.innerHTML = `
+            <div class="splide__cube"></div>
+            <div class="splide__cover">
+                <button class="splide__close">
+                    <svg class="splide__icon_close">
+                        <use href="/src/img/icons/sprite.svg#close"></use>
+                    </svg>
+                </button>
+                <button class="slide__arrow_btn prev">
+                    <svg class="splide__icon">
+                        <use href="/src/img/icons/sprite.svg#left"></use>
+                    </svg>
+                </button>
+                <button class="slide__arrow_btn next">
+                    <svg class="splide__icon">
+                        <use href="/src/img/icons/sprite.svg#right"></use>
+                    </svg>
+                </button>
+            </div>
+            <img src="${src}" class="slider__img" alt="${alt}" />
+        `
+		return slide
+	})
 }
 
-// 2. Функция фильтрации слайдера
-function filterSplide(category) {
-	// Очищаем текущий список в DOM
-	splideList.innerHTML = ''
+// --- 2. ИНИЦИАЛИЗАЦИЯ ---
+function initGallery() {
+	generateSlides() // Собираем слайды из Masonry
 
-	// Отбираем только нужные слайды из нашего сохраненного массива
-	const filteredSlides = allOriginalSlides.filter(slide => {
-		const src = slide.querySelector('img').getAttribute('src')
-		const correspondingMasonry = masonries.find(
-			m => m.querySelector('img').getAttribute('src') === src,
-		)
-		return (
-			category === 'All' ||
-			(correspondingMasonry && correspondingMasonry.dataset.filter === category)
-		)
+	splide = new Splide('.splide', {
+		type: 'region',
+		perPage: 1,
+		focus: 'center',
+		pagination: false,
+		arrows: false,
+		perMove: 1,
 	})
 
-	// Добавляем отфильтрованные слайды обратно в список
-	filteredSlides.forEach(slide => splideList.appendChild(slide))
+	splide.on('moved', updateImageBorder)
+	splide.mount()
 
-	// Пересобираем Splide, чтобы он пересчитал количество слайдов и индексы
+	// По умолчанию загружаем все слайды в слайдер
+	updateSliderContent('All')
+}
+
+// --- 3. ФИЛЬТРАЦИЯ СЛАЙДЕРА ---
+function updateSliderContent(category) {
+	splideList.innerHTML = '' // Очищаем текущие слайды
+
+	const filtered = allGeneratedSlides.filter(slide => {
+		return category === 'All' || slide.dataset.filter === category
+	})
+
+	filtered.forEach(slide => splideList.appendChild(slide))
+
 	splide.refresh()
 }
 
-// 3. Обработка клика по фильтрам
-filters.forEach(filter => {
-	filter.addEventListener('click', () => {
-		const category = filter.querySelector('span')
-			? filter.querySelector('span').innerText
-			: filter.innerText.trim()
+// Логика кнопок фильтров
+filters.forEach(filterBtn => {
+	filterBtn.addEventListener('click', () => {
+		const category = filterBtn.querySelector('span')?.innerText || filterBtn.innerText.trim()
 
 		filters.forEach(f => f.classList.remove('active'))
-		filter.classList.add('active')
+		filterBtn.classList.add('active')
 
-		// Фильтруем masonry (плитку)
-		masonries.forEach(item => {
+		// Фильтруем сетку masonry
+		masonryItems.forEach(item => {
 			const isVisible = category === 'All' || item.dataset.filter === category
 			item.style.display = isVisible ? 'block' : 'none'
 		})
 
-		// Фильтруем сам слайдер
-		filterSplide(category)
+		// Фильтруем содержимое слайдера
+		updateSliderContent(category)
 	})
 })
 
-// 4. Клик по картинке в галерее
-masonries.forEach(masonry => {
-	masonry.addEventListener('click', event => {
-		const clickedImgSrc = event.currentTarget.querySelector('img').getAttribute('src')
+// --- 4. ОТКРЫТИЕ ПОПАПА ---
+masonryItems.forEach(item => {
+	item.addEventListener('click', () => {
+		const clickedSrc = item.querySelector('img').getAttribute('src')
 
-		// Перед открытием убеждаемся, что Splide знает свои размеры
 		popup.classList.add('active')
-		splide.refresh()
 
-		// Ищем индекс картинки в ТЕКУЩЕМ (уже отфильтрованном) списке слайдов
-		const currentSlidesInDom = Array.from(splideList.querySelectorAll('.slider__item'))
-		const targetIndex = currentSlidesInDom.findIndex(
-			slide => slide.querySelector('img').getAttribute('src') === clickedImgSrc,
-		)
+		// Принудительный пересчет размеров в видимом состоянии
+		requestAnimationFrame(() => {
+			splide.refresh()
 
-		if (targetIndex !== -1) {
-			splide.go(targetIndex)
-			// Даем время на отрисовку перед расчетом границ
-			setTimeout(updateImageBorder, 50)
-		}
+			// Ищем индекс кликнутой картинки среди ТЕКУЩИХ слайдов в DOM
+			const currentSlides = Array.from(splideList.querySelectorAll('.slider__item'))
+			const targetIndex = currentSlides.findIndex(
+				s => s.querySelector('img').getAttribute('src') === clickedSrc,
+			)
+
+			if (targetIndex !== -1) {
+				splide.go(targetIndex)
+				// Фикс центровки для повторных кликов
+				splide.Components.Move.jump(splide.index)
+
+				setTimeout(updateImageBorder, 50)
+			}
+		})
 	})
 })
 
-// Обновление границ при листании
-splide.on('moved', updateImageBorder)
-window.addEventListener('resize', updateImageBorder)
-
+// --- 5. ОБНОВЛЕНИЕ ГРАНИЦ (UPDATE IMAGE BORDER) ---
 async function updateImageBorder() {
-	const container = getActiveSlide()
-	if (!container) return
+	const activeSlide = splide.Components.Slides.getAt(splide.index)?.slide
+	if (!activeSlide) return
 
-	const img = container.querySelector('.slider__img')
-	const cube = container.querySelector('.splide__cube')
-	const cover = container.querySelector('.splide__cover')
+	const img = activeSlide.querySelector('.slider__img')
+	const cube = activeSlide.querySelector('.splide__cube')
+	const cover = activeSlide.querySelector('.splide__cover')
 	const close = cover?.querySelector('.splide__close')
 	const buttons = Array.from(cover?.querySelectorAll('.slide__arrow_btn') || [])
 
@@ -112,58 +140,55 @@ async function updateImageBorder() {
 	cube.style.opacity = '0'
 
 	try {
-		const {width, height} = await getImageDimensions(img.src)
-		const imgAspect = width / height
+		const dimensions = await new Promise((resolve, reject) => {
+			const tempImg = new Image()
+			tempImg.onload = () => resolve({w: tempImg.naturalWidth, h: tempImg.naturalHeight})
+			tempImg.onerror = reject
+			tempImg.src = img.src
+		})
 
+		const imgAspect = dimensions.w / dimensions.h
 		const maxWidthPx = window.innerWidth * 0.85
 		const maxHeightPx = window.innerHeight * 0.9
 
-		let displayWidth, displayHeight
-
+		let finalW, finalH
 		if (maxWidthPx / maxHeightPx > imgAspect) {
-			displayHeight = maxHeightPx
-			displayWidth = displayHeight * imgAspect
+			finalH = maxHeightPx
+			finalW = finalH * imgAspect
 		} else {
-			displayWidth = maxWidthPx
-			displayHeight = displayWidth / imgAspect
+			finalW = maxWidthPx
+			finalH = finalW / imgAspect
 		}
 
-		const finalW = Math.round(displayWidth) + 'px'
-		const finalH = Math.round(displayHeight) + 'px'
+		const sizeW = Math.round(finalW) + 'px'
+		const sizeH = Math.round(finalH) + 'px'
 
-		cube.style.width = finalW
-		cube.style.height = finalH
-		cover.style.width = finalW
-		cover.style.height = finalH
+		;[cube, cover].forEach(el => {
+			el.style.width = sizeW
+			el.style.height = sizeH
+		})
 
 		cube.style.opacity = '1'
 		if (close) close.style.opacity = '1'
 		buttons.forEach(btn => (btn.style.opacity = '1'))
-	} catch (err) {
-		console.error('Ошибка обновления границ:', err)
+	} catch (e) {
+		console.error(e)
 	}
 }
 
-function getImageDimensions(src) {
-	return new Promise((resolve, reject) => {
-		const img = new Image()
-		img.onload = () => resolve({width: img.naturalWidth, height: img.naturalHeight})
-		img.onerror = reject
-		img.src = src
-	})
-}
+// --- 6. ВСПОМОГАТЕЛЬНЫЕ СОБЫТИЯ ---
+window.addEventListener('resize', updateImageBorder)
 
-// Закрытие
 const closeSlider = () => popup.classList.remove('active')
 
-popup.addEventListener('click', event => {
-	const target = event.target
+popup.addEventListener('click', e => {
+	const target = e.target
 	if (target.closest('.slide__arrow_btn.next')) return splide.go('>')
 	if (target.closest('.slide__arrow_btn.prev')) return splide.go('<')
 	if (target.closest('.splide__close')) return closeSlider()
-
 	if (
 		target === popup ||
+		target.classList.contains('slider__img') ||
 		target.classList.contains('splide__track') ||
 		target.classList.contains('splide__slide')
 	) {
@@ -174,3 +199,6 @@ popup.addEventListener('click', event => {
 document.addEventListener('keydown', e => {
 	if (e.key === 'Escape' && popup.classList.contains('active')) closeSlider()
 })
+
+// Запуск
+initGallery()
