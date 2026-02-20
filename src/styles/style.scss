@@ -1,3 +1,20 @@
+@mixin adaptive-font($min-font, $max-font, $max-width, $min-width) {
+	$different-fonts: $max-font - $min-font;
+	$different-width: $max-width - $min-width;
+	$coefficient-px: $different-fonts / $different-width;
+	$coefficient: $min-font - $coefficient-px * $min-width;
+
+	font-size: #{$min-font + px}; //размер шрифта на $min-width и ниже разрешении экрана
+
+	@media (min-width: #{$min-width + px}) {
+		font-size: calc(#{$coefficient-px} * 100vw + #{$coefficient + px});
+	}
+
+	@media (min-width: #{$max-width + px}) {
+		font-size: #{$max-font + px}; //размер шрифта на $max-width и выше разрешении экрана
+	}
+}
+
 :root {
 	--color: #1da1f2;
 	--white: #fff;
@@ -10,6 +27,7 @@
 }
 
 $one: 900;
+$three: 700;
 $four: 400;
 
 @font-face {
@@ -102,12 +120,8 @@ body {
 	border-radius: 2px;
 }
 .header-small__text {
-	font-size: 35px;
+	@include adaptive-font(21, 35, 1200, 320);
 	text-align: center;
-
-	@media (max-width: $one + 'px') {
-		font-size: 24px;
-	}
 }
 
 .header {
@@ -240,7 +254,7 @@ body {
 		transform 0.3s;
 
 	@media (max-width: $four + 'px') {
-		font-size: 16px;
+		font-size: 12px;
 	}
 }
 // ==== menu ====
@@ -380,12 +394,11 @@ body {
 .masonry {
 	display: flex;
 	flex-wrap: wrap;
-
-	// grid-template-columns: repeat(4, 1fr);
 	grid-gap: 20px;
 	margin-top: 30px;
 
 	@media (max-width: $one + 'px') {
+		justify-content: center;
 		grid-template-columns: repeat(2, 1fr);
 	}
 
@@ -403,6 +416,14 @@ body {
 	overflow: hidden;
 	border-radius: 4px;
 	cursor: pointer;
+
+	@media (max-width: $three + 'px') {
+		flex: 0 1 46%;
+	}
+
+	@media (max-width: $four + 'px') {
+		flex: 0 1 100%;
+	}
 }
 .masonry__img {
 	width: 100%;
@@ -433,7 +454,7 @@ body {
 	color: var(--blue);
 	font-size: 1.3em;
 	line-height: 1.5;
-	margin: 20px 50px 0 0;
+	margin: 20px 50px 10px 0;
 	text-align: right;
 }
 .post__images {

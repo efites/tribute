@@ -1,0 +1,18 @@
+// @include adaptive-font(14, 30, $max-width, $min-width);
+
+@mixin adaptive-font($min-font, $max-font, $max-width, $min-width) {
+	$different-fonts: $max-font - $min-font;
+	$different-width: $max-width - $min-width;
+	$coefficient-px: $different-fonts / $different-width;
+	$coefficient: $min-font - $coefficient-px * $min-width;
+
+	font-size: #{$min-font + px}; //размер шрифта на $min-width и ниже разрешении экрана
+
+	@media (min-width: #{$min-width + px}) {
+		font-size: calc(#{$coefficient-px} * 100vw + #{$coefficient + px});
+	}
+
+	@media (min-width: #{$max-width + px}) {
+		font-size: #{$max-font + px}; //размер шрифта на $max-width и выше разрешении экрана
+	}
+}
