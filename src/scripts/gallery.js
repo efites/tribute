@@ -9,7 +9,7 @@ const allOriginalSlides = Array.from(document.querySelectorAll('.slider__item'))
 
 // Инициализация Splide
 var splide = new Splide('.splide', {
-	type: 'loop',
+	type: 'region',
 	perPage: 1,
 	focus: 'center',
 	pagination: false,
