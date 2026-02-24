@@ -189,6 +189,12 @@ body {
 	width: 20px;
 	height: 20px;
 }
+.header-info__circle {
+	stroke: none;
+	fill: var(--blue);
+	width: 10px;
+	height: 10px;
+}
 .header-info__text {
 	font-size: 20px;
 	color: color-mix(in srgb, var(--text), transparent 30%);
