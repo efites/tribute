@@ -30,20 +30,12 @@ $one: 900;
 $three: 700;
 $four: 400;
 
-@font-face {
-	font-family: 'Juana';
-	font-display: fallback;
-	src: url('/src/fonts/Juana_ExtraLight.ttf') format('truetype');
-	font-weight: normal;
-	font-style: normal;
-}
-
 svg {
 	max-height: inherit;
 }
 
 body {
-	font-family: 'Juana', 'Arial', sans-serif;
+	font-family: 'Roboto', 'Arial', sans-serif;
 	scroll-behavior: smooth;
 }
 
@@ -239,6 +231,7 @@ body {
 	@media (hover: hover) {
 		&:hover {
 			cursor: pointer;
+
 			.menu__text {
 				transform: translateX(5px);
 				color: var(--blue);
@@ -246,7 +239,7 @@ body {
 		}
 	}
 
-	@media (max-width: $four + 'px') {
+	@media (max-width: $three + 'px') {
 		padding: 0.7em 0.1em;
 	}
 }
@@ -259,13 +252,10 @@ body {
 .menu__text {
 	font-size: 18px;
 	white-space: nowrap;
+	@include adaptive-font(9, 18, 1200, 320);
 	transition:
 		color 0.3s,
 		transform 0.3s;
-
-	@media (max-width: $four + 'px') {
-		font-size: 12px;
-	}
 }
 // ==== menu ====
 // ==== intro ====
