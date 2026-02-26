@@ -81,7 +81,7 @@ body {
 // ==== header
 .header-small {
 	position: fixed;
-	z-index: 1;
+	z-index: 2;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -90,8 +90,7 @@ body {
 	width: 100%;
 	padding: 20px;
 	grid-gap: 20px;
-	backdrop-filter: blur(5px);
-	background-color: rgba(255, 255, 255, 0.29);
+	// background-color: rgba(255, 255, 255, 0.29);
 	transition:
 		opacity 0.3s,
 		transform 0.3s ease;
@@ -205,10 +204,15 @@ body {
 .menu {
 	position: sticky;
 	z-index: 1;
-	top: 85px;
+	top: 0;
 	display: flex;
 	justify-content: center;
-	margin-top: 150px;
+	// backdrop-filter: blur(5px);
+}
+.menu__container {
+	display: flex;
+	justify-content: center;
+	margin-top: 85px;
 }
 .menu__list {
 	display: inline-flex;

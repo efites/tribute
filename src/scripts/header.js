@@ -1,5 +1,6 @@
 const bigHeader = document.querySelector('header.header')
 const smallHeader = document.querySelector('div.header-small')
+const menu = document.querySelector('menu.menu')
 
 setHeader()
 
@@ -13,6 +14,7 @@ function setHeader() {
 
 		smallHeader.style.opacity = '1'
 		smallHeader.style.transform = 'translateY(0)'
+		menu.style.backdropFilter = 'blur(5px)'
 	} else {
 		bigHeader.style.pointerEvents = 'all'
 		bigHeader.style.opacity = '1'
@@ -20,5 +22,6 @@ function setHeader() {
 
 		smallHeader.style.opacity = '0'
 		smallHeader.style.transform = 'translateY(-10px)'
+		menu.style.backdropFilter = 'blur(0)'
 	}
 }
