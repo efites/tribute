@@ -4,20 +4,25 @@ const masonryItems = Array.from(document.querySelectorAll('.masonry__item'))
 const filters = document.querySelectorAll('.gallery__filter_button')
 
 let splide
-let allGeneratedSlides = [] // Здесь будем хранить созданные DOM-узлы слайдов
+let allGeneratedSlides = []
 
-// --- 1. ФУНКЦИЯ ГЕНЕРАЦИИ СЛАЙДОВ ---
+// --- 1. ФУНКЦИЯ ГЕНЕРАЦИИ СЛАЙДОВ (ТЕПЕРЬ И ДЛЯ ВИДЕО) ---
 function generateSlides() {
 	allGeneratedSlides = masonryItems.map(item => {
-		const img = item.querySelector('img')
-		const src = img.getAttribute('src')
-		const alt = img.getAttribute('alt')
+		const media = item.querySelector('img, video') // Ищем и то, и другое
+		const src = media.getAttribute('src')
+		const alt = media.getAttribute('alt') || ''
 		const filter = item.dataset.filter
+		const isVideo = media.tagName.toLowerCase() === 'video'
 
-		// Создаем структуру слайда (как в вашем исходном HTML)
 		const slide = document.createElement('div')
 		slide.className = 'splide__slide slider__item'
-		slide.dataset.filter = filter // Сохраняем фильтр в самом слайде
+		slide.dataset.filter = filter
+
+		// Генерируем HTML в зависимости от типа медиа
+		const mediaHtml = isVideo
+			? `<video src="${src}" class="slider__img" autoplay loop muted playsinline></video>`
+			: `<img src="${src}" class="slider__img" alt="${alt}" />`
 
 		slide.innerHTML = `
             <div class="splide__cube"></div>
@@ -38,7 +43,7 @@ function generateSlides() {
                     </svg>
                 </button>
             </div>
-            <img src="${src}" class="slider__img" alt="${alt}" />
+            ${mediaHtml}
         `
 		return slide
 	})
@@ -46,7 +51,7 @@ function generateSlides() {
 
 // --- 2. ИНИЦИАЛИЗАЦИЯ ---
 function initGallery() {
-	generateSlides() // Собираем слайды из Masonry
+	generateSlides()
 
 	splide = new Splide('.splide', {
 		type: 'region',
@@ -58,40 +63,44 @@ function initGallery() {
 	})
 
 	splide.on('moved', updateImageBorder)
-	splide.mount()
+	// Добавляем событие паузы видео при перелистывании (опционально)
+	splide.on('move', () => {
+		const videos = splideList.querySelectorAll('video')
+		videos.forEach(v => v.pause())
+	})
+	splide.on('moved', () => {
+		const activeSlide = splide.Components.Slides.getAt(splide.index).slide
+		const video = activeSlide.querySelector('video')
+		if (video) video.play()
+	})
 
-	// По умолчанию загружаем все слайды в слайдер
+	splide.mount()
 	updateSliderContent('All')
 }
 
 // --- 3. ФИЛЬТРАЦИЯ СЛАЙДЕРА ---
 function updateSliderContent(category) {
-	splideList.innerHTML = '' // Очищаем текущие слайды
+	splideList.innerHTML = ''
 
 	const filtered = allGeneratedSlides.filter(slide => {
 		return category === 'All' || slide.dataset.filter === category
 	})
 
 	filtered.forEach(slide => splideList.appendChild(slide))
-
 	splide.refresh()
 }
 
-// Логика кнопок фильтров
 filters.forEach(filterBtn => {
 	filterBtn.addEventListener('click', () => {
 		const category = filterBtn.querySelector('span')?.innerText || filterBtn.innerText.trim()
-
 		filters.forEach(f => f.classList.remove('active'))
 		filterBtn.classList.add('active')
 
-		// Фильтруем сетку masonry
 		masonryItems.forEach(item => {
 			const isVisible = category === 'All' || item.dataset.filter === category
 			item.style.display = isVisible ? 'block' : 'none'
 		})
 
-		// Фильтруем содержимое слайдера
 		updateSliderContent(category)
 	})
 })
@@ -99,65 +108,74 @@ filters.forEach(filterBtn => {
 // --- 4. ОТКРЫТИЕ ПОПАПА ---
 masonryItems.forEach(item => {
 	item.addEventListener('click', () => {
-		const clickedSrc = item.querySelector('img').getAttribute('src')
+		const media = item.querySelector('img, video')
+		const clickedSrc = media.getAttribute('src')
 
 		popup.classList.add('active')
 
-		// Принудительный пересчет размеров в видимом состоянии
 		requestAnimationFrame(() => {
 			splide.refresh()
 
-			// Ищем индекс кликнутой картинки среди ТЕКУЩИХ слайдов в DOM
 			const currentSlides = Array.from(splideList.querySelectorAll('.slider__item'))
 			const targetIndex = currentSlides.findIndex(
-				s => s.querySelector('img').getAttribute('src') === clickedSrc,
+				s => s.querySelector('.slider__img').getAttribute('src') === clickedSrc,
 			)
 
 			if (targetIndex !== -1) {
 				splide.go(targetIndex)
-				// Фикс центровки для повторных кликов
 				splide.Components.Move.jump(splide.index)
-
 				setTimeout(updateImageBorder, 50)
 			}
 		})
 	})
 })
 
-// --- 5. ОБНОВЛЕНИЕ ГРАНИЦ (UPDATE IMAGE BORDER) ---
+// --- 5. ОБНОВЛЕНИЕ ГРАНИЦ (ПОДДЕРЖКА ВИДЕО) ---
 async function updateImageBorder() {
 	const activeSlide = splide.Components.Slides.getAt(splide.index)?.slide
 	if (!activeSlide) return
 
-	const img = activeSlide.querySelector('.slider__img')
+	const media = activeSlide.querySelector('.slider__img')
 	const cube = activeSlide.querySelector('.splide__cube')
 	const cover = activeSlide.querySelector('.splide__cover')
 	const close = cover?.querySelector('.splide__close')
 	const buttons = Array.from(cover?.querySelectorAll('.slide__arrow_btn') || [])
 
-	if (!img || !cube || !cover) return
+	if (!media || !cube || !cover) return
 
 	cube.style.opacity = '0'
 
 	try {
 		const dimensions = await new Promise((resolve, reject) => {
-			const tempImg = new Image()
-			tempImg.onload = () => resolve({w: tempImg.naturalWidth, h: tempImg.naturalHeight})
-			tempImg.onerror = reject
-			tempImg.src = img.src
+			if (media.tagName.toLowerCase() === 'video') {
+				// Если это видео и метаданные уже загружены
+				if (media.videoWidth) {
+					resolve({w: media.videoWidth, h: media.videoHeight})
+				} else {
+					media.onloadedmetadata = () =>
+						resolve({w: media.videoWidth, h: media.videoHeight})
+					media.onerror = reject
+				}
+			} else {
+				// Если это картинка
+				const tempImg = new Image()
+				tempImg.onload = () => resolve({w: tempImg.naturalWidth, h: tempImg.naturalHeight})
+				tempImg.onerror = reject
+				tempImg.src = media.src
+			}
 		})
 
-		const imgAspect = dimensions.w / dimensions.h
+		const mediaAspect = dimensions.w / dimensions.h
 		const maxWidthPx = window.innerWidth * 0.85
 		const maxHeightPx = window.innerHeight * 0.9
 
 		let finalW, finalH
-		if (maxWidthPx / maxHeightPx > imgAspect) {
+		if (maxWidthPx / maxHeightPx > mediaAspect) {
 			finalH = maxHeightPx
-			finalW = finalH * imgAspect
+			finalW = finalH * mediaAspect
 		} else {
 			finalW = maxWidthPx
-			finalH = finalW / imgAspect
+			finalH = finalW / mediaAspect
 		}
 
 		const sizeW = Math.round(finalW) + 'px'
@@ -172,20 +190,26 @@ async function updateImageBorder() {
 		if (close) close.style.opacity = '1'
 		buttons.forEach(btn => (btn.style.opacity = '1'))
 	} catch (e) {
-		console.error(e)
+		console.error('Ошибка при получении размеров медиа:', e)
 	}
 }
 
 // --- 6. ВСПОМОГАТЕЛЬНЫЕ СОБЫТИЯ ---
 window.addEventListener('resize', updateImageBorder)
 
-const closeSlider = () => popup.classList.remove('active')
+const closeSlider = () => {
+	popup.classList.remove('active')
+	// Ставим на паузу все видео при закрытии
+	splideList.querySelectorAll('video').forEach(v => v.pause())
+}
 
 popup.addEventListener('click', e => {
 	const target = e.target
 	if (target.closest('.slide__arrow_btn.next')) return splide.go('>')
 	if (target.closest('.slide__arrow_btn.prev')) return splide.go('<')
 	if (target.closest('.splide__close')) return closeSlider()
+
+	// Проверяем клик по фону (теперь и с учетом видео)
 	if (
 		target === popup ||
 		target.classList.contains('slider__img') ||
@@ -200,5 +224,4 @@ document.addEventListener('keydown', e => {
 	if (e.key === 'Escape' && popup.classList.contains('active')) closeSlider()
 })
 
-// Запуск
 initGallery()
