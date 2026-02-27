@@ -29,14 +29,14 @@ function generateSlides() {
 
 		slide.innerHTML = `
             <div class="splide__cube"></div>
-            <div class="splide__cover">
-                <button class="splide__close">
+            <div class="splide__cover events__none">
+                <button class="splide__close events__all">
                     <svg class="splide__icon_close"><use href="/src/img/icons/sprite.svg#close"></use></svg>
                 </button>
-                <button class="slide__arrow_btn prev">
+                <button class="slide__arrow_btn prev events__all">
                     <svg class="splide__icon"><use href="/src/img/icons/sprite.svg#left"></use></svg>
                 </button>
-                <button class="slide__arrow_btn next">
+                <button class="slide__arrow_btn next events__all">
                     <svg class="splide__icon"><use href="/src/img/icons/sprite.svg#right"></use></svg>
                 </button>
             </div>

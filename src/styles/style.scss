@@ -526,6 +526,12 @@ body {
 	opacity: 0;
 	transition: opacity 0.3s ease;
 }
+.events__none {
+	pointer-events: none;
+}
+.events__all {
+	pointer-events: all;
+}
 .splide__cover {
 	position: absolute;
 	z-index: 1;
