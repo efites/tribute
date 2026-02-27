@@ -348,6 +348,7 @@ body {
 .gallery__filter {
   display: flex;
   grid-gap: 20px;
+  flex-wrap: wrap;
 }
 
 .gallery__filter_button {
