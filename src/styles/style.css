@@ -577,6 +577,11 @@ body {
 .slide__arrow_btn.next {
   left: calc(100% - 70px);
 }
+@media (hover: none) {
+  .slide__arrow_btn {
+    display: none;
+  }
+}
 @media (hover: hover) {
   .slide__arrow_btn:hover {
     background-color: var(--white);

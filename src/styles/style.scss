@@ -581,6 +581,10 @@ body {
 		left: calc(100% - 70px);
 	}
 
+	@media (hover: none) {
+		display: none;
+	}
+
 	@media (hover: hover) {
 		&:hover {
 			background-color: var(--white);
