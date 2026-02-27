@@ -543,6 +543,20 @@ body {
   border-radius: 5px;
   cursor: grab;
 }
+@media (hover: hover) {
+  .splide__cover {
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+  .splide__cover:hover {
+    opacity: 1;
+  }
+}
+
+.splide__cover_wrapper {
+  width: 100%;
+  height: 100%;
+}
 
 .slide__arrow_btn {
   position: absolute;
