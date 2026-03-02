@@ -93,6 +93,8 @@ function initGallery() {
 		splideList.querySelectorAll('video').forEach(v => v.pause())
 	})
 	splide.on('moved', () => {
+		if (!popup.classList.contains('active')) return
+
 		const activeSlide = splide.Components.Slides.getAt(splide.index).slide
 		const video = activeSlide.querySelector('video')
 		if (video) video.play()
@@ -220,22 +222,39 @@ window.addEventListener('resize', updateImageBorder)
 
 const closeSlider = () => {
 	popup.classList.remove('active')
-	splideList.querySelectorAll('video').forEach(v => v.pause())
+
+	// Останавливаем все видео при закрытии
+	const allVideos = popup.querySelectorAll('video')
+	allVideos.forEach(v => {
+		v.pause()
+		v.currentTime = 0
+	})
 }
 
 popup.addEventListener('click', e => {
 	const target = e.target
+	console.log(target)
+	// 1. Кнопки навигации (не закрываем)
 	if (target.closest('.slide__arrow_btn.next')) return splide.go('>')
 	if (target.closest('.slide__arrow_btn.prev')) return splide.go('<')
+
+	// 2. Кнопка закрытия (крестик) — закрываем
 	if (target.closest('.splide__close')) return closeSlider()
-	if (
+
+	// 3. Логика клика по контенту или фону
+	const isImage = target.tagName === 'IMG' // Проверяем, что это именно картинка
+	const isBackground =
 		target === popup ||
-		target.classList.contains('slider__img') ||
 		target.classList.contains('splide__track') ||
-		target.classList.contains('splide__slide')
-	) {
+		target.classList.contains('splide__slide') ||
+		target.classList.contains('splide__cube')
+
+	// Если кликнули по фону ИЛИ по изображению — закрываем
+	if (isBackground || isImage) {
 		closeSlider()
 	}
+
+	// Если кликнули по VIDEO — ничего не делаем (попап не закроется)
 })
 
 document.addEventListener('keydown', e => {
