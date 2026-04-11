@@ -1,6 +1,7 @@
 node_modules
 .vscode
 .husky
+src/img
 
 # Editor directories and files
 .vscode/*

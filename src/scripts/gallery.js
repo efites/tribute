@@ -6,9 +6,9 @@ const loadMoreBtn = document.getElementById('load-more')
 
 let splide
 let allGeneratedSlides = []
-let visibleCount = 4 // Сколько элементов показывать изначально
-const STEP = 4 // Сколько добавлять при клике
-let currentCategory = 'All'
+let visibleCount = 20 // Сколько элементов показывать изначально
+const STEP = 20 // Сколько добавлять при клике
+let currentCategory = 'Все'
 
 // --- 1. ГЕНЕРАЦИЯ СЛАЙДОВ (без изменений) ---
 function generateSlides() {
@@ -32,13 +32,13 @@ function generateSlides() {
             <div class="splide__cover events__none">
 				<div class="splide__cover_wrapper">
 					<button class="splide__close events__all">
-						<svg class="splide__icon_close"><use href="/src/img/icons/sprite.svg#close"></use></svg>
+						<svg class="splide__icon_close"><use href="img/icons/sprite.svg#close"></use></svg>
 					</button>
 					<button class="slide__arrow_btn prev events__all">
-						<svg class="splide__icon"><use href="/src/img/icons/sprite.svg#left"></use></svg>
+						<svg class="splide__icon"><use href="img/icons/sprite.svg#left"></use></svg>
 					</button>
 					<button class="slide__arrow_btn next events__all">
-						<svg class="splide__icon"><use href="/src/img/icons/sprite.svg#right"></use></svg>
+						<svg class="splide__icon"><use href="img/icons/sprite.svg#right"></use></svg>
 					</button>
 				</div>
             </div>
@@ -52,7 +52,7 @@ function generateSlides() {
 function applyGalleryLogic() {
 	// 1. Фильтруем элементы masonry по категории
 	const filteredMasonry = masonryItems.filter(
-		item => currentCategory === 'All' || item.dataset.filter === currentCategory,
+		item => currentCategory === 'Все' || item.dataset.filter === currentCategory,
 	)
 
 	// 2. Показываем только первые N из отфильтрованных
@@ -86,6 +86,7 @@ function initGallery() {
 		pagination: false,
 		arrows: false,
 		perMove: 1,
+		flickPower : 3000,
 	})
 
 	splide.on('moved', updateImageBorder)
@@ -110,7 +111,7 @@ function initGallery() {
 function updateSliderContent(category) {
 	splideList.innerHTML = ''
 	const filtered = allGeneratedSlides.filter(
-		slide => category === 'All' || slide.dataset.filter === category,
+		slide => category === 'Все' || slide.dataset.filter === category,
 	)
 	filtered.forEach(slide => splideList.appendChild(slide))
 	splide.refresh()
