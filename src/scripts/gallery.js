@@ -86,7 +86,8 @@ function initGallery() {
 		pagination: false,
 		arrows: false,
 		perMove: 1,
-		flickPower : 3000,
+		lazyLoad: true,
+		flickPower : 9000,
 	})
 
 	splide.on('moved', updateImageBorder)
